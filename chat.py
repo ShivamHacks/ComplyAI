@@ -72,13 +72,27 @@ To analyze the documents, follow these steps:
 2. Review the requirements and determine if they are met
 3. Provide a clear explanation for each requirement
 
+You must respond in this format:
+Thought: Consider what tool to use and why
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
 Question: {input}
 {agent_scratchpad}
 """)
 
 # Create and run agent
 agent = create_react_agent(llm, tools, prompt)
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+agent_executor = AgentExecutor(
+    agent=agent, 
+    tools=tools, 
+    verbose=True,
+    handle_parsing_errors=True
+)
 
 def analyze_building():
     """Run the building analysis agent."""
